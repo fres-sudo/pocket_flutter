@@ -13,6 +13,7 @@ import 'package:pocket_flutter/services/dtos/user/user_dto.dart';
 import 'package:pocket_flutter/services/network/auth_service.dart';
 import 'package:pocket_flutter/services/storage/local_storage.dart';
 import 'package:pocket_flutter/state/cubits/auth/auth_cubit.dart';
+import 'package:pocket_flutter/state/cubits/theme/theme_cubit.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
