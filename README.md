@@ -5,10 +5,6 @@
 [![Star on GitHub](https://img.shields.io/github/stars/fres-sudo/pocket_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/fres-sudo/pocket_flutter)
 [![License: MIT][license_badge]][license_link]
 
-Generated with `brick:avilatek_readme`[^1].
-
-{{description}}
-
 ## Table of content
 
 - [PocketFlutter](#project_name)
@@ -50,7 +46,6 @@ To run the desired flavor either use the launch configuration in VSCode/Android 
 
 ```sh
 # Development
-
 fvm flutter run --flavor development --target lib/main_development.dart
 
 # Staging
@@ -217,8 +212,6 @@ This command will generate:
 ```
 
 ##### _made with ❤️ by Fres_
-
----
 
 [coverage_badge]: coverage_badge.svg
 [flutter_localizations_link]: https://pub.dev/packages/slangflutter_localizations-library.html
