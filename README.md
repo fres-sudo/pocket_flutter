@@ -1,6 +1,8 @@
 # PocketFlutter
 
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
+![Dart CI](https://github.com/fres-sudo/pocket_flutter/workflows/Dart%20CI/badge.svg)
+[![Star on GitHub](https://img.shields.io/github/stars/fres-sudo/pocket_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/fres-sudo/pocket_flutter)
 [![License: MIT][license_badge]][license_link]
 
 Generated with `brick:avilatek_readme`[^1].
