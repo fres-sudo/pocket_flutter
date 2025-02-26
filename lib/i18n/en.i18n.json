@@ -1,0 +1,101 @@
+{
+	"general": {
+		"or": "or",
+		"welcome": "Welcome",
+		"welcome_back": "Welcome back",
+		"discover_events": "Discover events near you",
+		"search": "Search",
+		"see_more": "See more",
+		"description": "Description",
+		"back_to_home": "Back to home",
+		"save": "Save",
+		"close": "Close",
+		"create": "Create",
+		"update": "Update",
+		"delete": "Delete",
+		"person": "person",
+		"total": "Total",
+		"ticket": "Ticket"
+	},
+	"auth": {
+		"login": {
+			"title": "Login",
+			"no_account": "Don't have an account?",
+			"forgot_password": "Forgot password?"
+		},
+		"signup": {
+			"title": "Sign up",
+			"already_have_account": "Already have an account?"
+		},
+		"forgot_password": {
+			"title": "Forgot password",
+			"send": "Send"
+		},
+		"register": {
+			"title": "Register"
+		},
+		"providers": {
+			"google": "Continue with Google",
+			"facebook": "Continue with Facebook",
+			"apple": "Continue with Apple"
+		},
+		"change_password": {
+			"title": "Change password",
+			"new_password": "New password",
+			"confirm_password": "Confirm password",
+			"change": "Change"
+		},
+		"logout": {
+			"title": "Logout",
+			"message": "Are you sure you want to logout?"
+		}
+	},
+	"errors": {
+		"generic": "An error occurred, please try again later",
+		"not_allowed": "Operation not allowed",
+		"too_many_requests": "Too many requests, please try again later",
+		"image_error": "Error loading image",
+		"validation": {
+			"password": {
+				"required": "Password is required",
+				"min_length": "Password must be at least 8 characters long",
+				"upper_case": "Password must contain at least one uppercase letter",
+				"lower_case": "Password must contain at least one lowercase letter",
+				"digit": "Password must contain at least one number"
+			},
+			"email": {
+				"required": "Email is required",
+				"invalid": "Email is invalid"
+			},
+			"title_required": "Title is required",
+			"category_required": "Category is required",
+			"type_required": "Type is required",
+			"start_date_required": "Start date is required",
+			"end_date_required": "End date is required",
+			"location_required": "Location is required",
+			"price_required": "Price is required",
+			"min_age_required": "Min age is required",
+			"max_age_required": "Max age is required",
+			"description_required": "Description is required",
+			"min_participants_required": "Min participants is required",
+			"max_participants_required": "Max participants is required",
+			"gender_required": "Gender is required",
+			"required": "This field is required",
+			"invalid": "Invalid value",
+			"generic_error": "You are missing some required fields, please check your data"
+		},
+		"auth": {
+			"wrong_credentials": "Wrong email or password",
+			"email_already_exists": "Email already exists",
+			"invalid_email": "Invalid email",
+			"user_disabled": "User is disabled"
+		},
+		"user": {
+			"not_found": "User not found",
+			"updating_user": "An error occurred while updating your data",
+			"updating_user_photo": "An error occurred while updating your profile image",
+			"deleting_user": "An error occurred while deleting your account",
+			"searching_username": "An error occurred while verifying username"
+		}
+	}
+}
