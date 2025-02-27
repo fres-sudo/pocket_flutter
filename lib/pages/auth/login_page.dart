@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pocket_flutter/misc/constants.dart';
+import 'package:pocket_flutter/i18n/strings.g.dart';
+import 'package:pocket_flutter/misc/validators/password_validator.dart';
 import 'package:pocket_flutter/routes/app_router.gr.dart';
 import 'package:pocket_flutter/state/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pocket_flutter/ui/device.dart';
@@ -28,7 +29,7 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
         kFormEmail: FormControl<String>(
           validators: [Validators.required, Validators.email],
         ),
-        kFormPassword: FormControl<String>(validators: [Validators.required, Validators.minLength(8)]),
+        kFormPassword: FormControl<String>(validators: [Validators.required, PasswordValidator()]),
       });
 
   @override
@@ -57,6 +58,13 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
                         ReactiveTextField<String>(
                           formControlName: kFormPassword,
                           decoration: const InputDecoration(labelText: 'Password'),
+                          validationMessages: {
+                            ValidationMessage.required: (error) => t.errors.validation.password.required,
+                            'minLength': (error) => error.toString(),
+                            'uppercase': (error) => error.toString(),
+                            'lowercase': (error) => error.toString(),
+                            'digit': (error) => error.toString(),
+                          },
                         ),
                         ElevatedButton(
                           onPressed: () {

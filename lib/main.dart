@@ -8,7 +8,6 @@ import 'package:pocket_flutter/di/dependency_injector.dart';
 import 'package:pocket_flutter/i18n/strings.g.dart';
 import 'package:pocket_flutter/misc/constants.dart';
 import 'package:pocket_flutter/routes/app_router.dart';
-import 'package:pocket_flutter/services/local/package_service.dart';
 import 'package:pocket_flutter/services/storage/local_storage.dart';
 import 'package:pocket_flutter/state/cubits/theme/theme_cubit.dart';
 import 'package:pocket_flutter/ui/theme.dart';
@@ -25,7 +24,7 @@ void main() async {
     storageDirectory: directory,
   );
   final authStore = await FlutterSecureStorage().read(key: K.authStoreKey) ?? "";
-  LocalStorage.instance.initialize(authStore);
+  UserSessionStorage.instance.initialize(authStore);
 
   runApp(TranslationProvider(child: PocketFlutter()));
 }

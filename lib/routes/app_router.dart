@@ -31,6 +31,10 @@ class AppRouter extends RootStackRouter {
         ]),
         CustomRoute(
           transitionsBuilder: TransitionsBuilders.fadeIn,
+          page: UpdateProfileRoute.page,
+        ),
+        CustomRoute(
+          transitionsBuilder: TransitionsBuilders.fadeIn,
           page: LoginRoute.page,
         ),
         CustomRoute(

@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pocket_flutter/misc/constants.dart';
-import 'package:pocket_flutter/services/local/package_service.dart';
+import 'package:pocket_flutter/routes/app_router.gr.dart';
 import 'package:pocket_flutter/state/cubits/auth/auth_cubit.dart';
 import 'package:pocket_flutter/state/cubits/package/package_cubit.dart';
 import 'package:pocket_flutter/ui/device.dart';
@@ -51,7 +50,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   SizedBox(height: Sizes.lg),
                   FilledButton(
-                    onPressed: () => context.read<AuthCubit>().signOut(),
+                    onPressed: () => context.router.push(const UpdateProfileRoute()),
                     child: Center(child: const Text('Update Profile')),
                   ),
                   ElevatedButton(
@@ -64,7 +63,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    "PocketFlutter Version: ${context.read<PackageCubit>().state.version}",
+                    "PocketFlutter Version: ${context.watch<PackageCubit>().state.version}",
                     style: TextStyle().italic,
                   ),
                 ],

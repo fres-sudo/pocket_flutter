@@ -14,9 +14,9 @@ final List<SingleChildWidget> _providers = [
       create: (context) => AsyncAuthStore(
             save: (String data) async =>
                 await context.read<FlutterSecureStorage>().write(key: K.authStoreKey, value: data),
-            initial: LocalStorage.instance.storedValue,
+            initial: UserSessionStorage.instance.storedValue,
             clear: () {
-              LocalStorage.instance.clear();
+              UserSessionStorage.instance.clear();
               context.read<FlutterSecureStorage>().delete(key: K.authStoreKey);
               return Future.value(null);
             },
@@ -26,7 +26,6 @@ final List<SingleChildWidget> _providers = [
   Provider<AuthService>(
     create: (context) => AuthServiceImpl(
       googleSignInFactory: (scopes) => GoogleSignIn(
-        clientId: Platform.isIOS ? K.googleClientId : null,
         scopes: scopes,
       ),
       logger: context.read(),

@@ -16,8 +16,8 @@ abstract class AuthRepository {
     required String password,
   });
 
-  /// Perform sign up procedure putting [name],
-  /// [email] and [newPassword].
+  /// Perform sign up procedure with [name],
+  /// [email] and [password].
   Future<void> signUp({
     required String email,
     required String password,
@@ -28,10 +28,10 @@ abstract class AuthRepository {
   Future<void> resetPassword(String email);
 
   /// Perform the logout of the current user.
-  Future<void> signOut();
+  void signOut();
 
-  /// Perform to reload user
-  Future<void> reload();
+  /// Perform to refresh session of the current logged user
+  Future<void> refresh();
 
   /// Perform send email verification
   Future<void> sendEmailVerification(String email);
@@ -60,12 +60,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String name,
   }) async {
     try {
-      logger.info(
-        '[AuthRepository] Signing up user with the following parameters: {'
-        'email: $email, '
-        'password: $password'
-        '}',
-      );
+      logger.info('[AuthRepository] Signing up user with email: $email');
       final dto = UserDTO(
           name: name,
           email: email,
@@ -74,18 +69,10 @@ class AuthRepositoryImpl implements AuthRepository {
           updated: DateTime.now(),
           verified: true);
       await authService.signUp(dto: dto);
-      logger.info(
-        '[AuthRepository] User signed up successfully with the following parameters: {'
-        'email: $email, '
-        'password: $password'
-        '}',
-      );
+      logger.info('[AuthRepository] User signed up successfully with email: $email');
     } catch (error, stackTrace) {
       logger.error(
-        '[AuthRepository] Error signing up user with the following parameters: {'
-        'email: $email, '
-        'password: $password'
-        '}',
+        '[AuthRepository] Error signing up user with email: $email',
         error,
         stackTrace,
       );
@@ -100,25 +87,12 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      logger.info(
-        '[AuthRepository] Signing in user with the following parameters: {'
-        'email: $email, '
-        'password: $password'
-        '}',
-      );
+      logger.info('[AuthRepository] Signing in user with email: $email');
       await authService.signIn(email: email, password: password);
-      logger.info(
-        '[AuthRepository] User signed in successfully with the following parameters: {'
-        'email: $email, '
-        'password: $password'
-        '}',
-      );
+      logger.info('[AuthRepository] User signed in successfully with email: $email');
     } catch (error, stackTrace) {
       logger.error(
-        '[AuthRepository] Error signing in user with the following parameters: {'
-        'email: $email, '
-        'password: $password'
-        '}',
+        '[AuthRepository] Error signing in user with $email',
         error,
         stackTrace,
       );
@@ -136,16 +110,10 @@ class AuthRepositoryImpl implements AuthRepository {
         '}',
       );
       await authService.resetPassword(email);
-      logger.info(
-        '[AuthRepository] Password reset successfully for user with the following parameters: {'
-        'email: $email'
-        '}',
-      );
+      logger.info('[AuthRepository] Password reset successfully for user with email: $email');
     } catch (error, stackTrace) {
       logger.error(
-        '[AuthRepository] Error resetting password for user with the following parameters: {'
-        'email: $email'
-        '}',
+        '[AuthRepository] Error resetting password for user with email: $email',
         error,
         stackTrace,
       );
@@ -156,30 +124,20 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> signOut() async {
-    try {
-      logger.info('[AuthRepository] Performing signOut');
-      await authService.signOut();
-      logger.info('[AuthRepository] SignOut successful');
-    } catch (error, stackTrace) {
-      logger.error(
-        '[AuthRepository] Error performing signOut',
-        error,
-        stackTrace,
-      );
-
-      rethrow;
-    }
+    logger.info('[AuthRepository] Performing sign out');
+    authService.signOut();
+    logger.info('[AuthRepository] Sign out successful');
   }
 
   @override
-  Future<void> reload() async {
+  Future<void> refresh() async {
     try {
-      logger.info('[AuthRepository] Reloading user');
-      await authService.reload();
-      logger.info('[AuthRepository] User reloaded successfully');
+      logger.info('[AuthRepository] Refreshing currnet user');
+      await authService.refresh();
+      logger.info('[AuthRepository] User refreshed successfully');
     } catch (error, stackTrace) {
       logger.error(
-        '[AuthRepository] Error reloading user',
+        '[AuthRepository] Error refreshing user',
         error,
         stackTrace,
       );
@@ -190,12 +148,12 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> sendEmailVerification(String email) async {
     try {
-      logger.info('[AuthRepository] Sending email verification');
+      logger.info('[AuthRepository] Sending email verification to $email');
       await authService.sendEmailVerification(email);
-      logger.info('[AuthRepository] Email verification sent successfully');
+      logger.info('[AuthRepository] Email verification sent successfully to $email');
     } catch (error, stackTrace) {
       logger.error(
-        '[AuthRepository] Error sending email verification',
+        '[AuthRepository] Error sending email verification to $email',
         error,
         stackTrace,
       );

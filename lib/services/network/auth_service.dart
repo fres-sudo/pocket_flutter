@@ -1,35 +1,62 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pocket_flutter/models/user/user.dart';
+import 'package:pocket_flutter/errors/auth_errors.dart';
+import 'package:pocket_flutter/errors/generic_errors.dart';
 import 'package:pocket_flutter/services/dtos/user/user_dto.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:talker/talker.dart';
 
-/// Abstract class of AuthService
+/// Service responsible for handling authentication-related operations.
+///
+/// This service provides methods to:
+/// * Monitor authenticated user state
+/// * Sign in users with email and password
+/// * Register new users
+/// * Handle password reset
+/// * Manage user sessions
+/// * Email verification
 abstract class AuthService {
-  /// Returns the currently authenticated [User]
+  /// Stream that emits the currently authenticated user.
+  ///
+  /// Emits [UserDTO] when a user is authenticated, null otherwise.
   Stream<UserDTO?> get user;
 
-  /// Perform the login with [email] and [password].
+  /// Authenticates a user using email and password credentials.
+  ///
+  /// Takes [email] and [password] as required parameters.
+  /// Throws an exception if authentication fails.
   Future<void> signIn({
     required String email,
     required String password,
   });
 
-  /// Perform sign up procedure putting [firstName],
-  /// [firstName],[email] and [newPassword].
+  /// Creates a new user account with the provided information.
+  ///
+  /// Takes [dto] containing user registration data.
+  /// Throws an exception if registration fails.
   Future<void> signUp({required UserDTO dto});
 
-  /// Initiate a password reset procedure for the user linked by this [email].
+  /// Initiates password reset procedure for a user.
+  ///
+  /// Takes user's [email] address.
+  /// Sends password reset instructions to the provided email.
   Future<void> resetPassword(String email);
 
-  /// Perform the logout of the current user.
-  Future<void> signOut();
+  /// Signs out the currently authenticated user.
+  ///
+  /// Clears all authentication tokens and user session data.
+  void signOut();
 
-  /// Perform to reload user
-  Future<void> reload();
+  /// Refreshes the current user's authentication state.
+  ///
+  /// Updates user information and authentication tokens if needed.
+  Future<void> refresh();
 
-  /// Perform send email verification
+  /// Sends an email verification link to the user.
+  ///
+  /// Takes user's [email] address.
+  /// Sends verification instructions to the provided email.
   Future<void> sendEmailVerification(String email);
 }
 
@@ -54,7 +81,7 @@ class AuthServiceImpl implements AuthService {
   }
 
   void _updateUserState() {
-    print('authStore.isValid: ${pb.authStore.isValid}');
+    debugPrint('authStore.isValid: ${pb.authStore.isValid}');
     if (pb.authStore.isValid) {
       _userController.add(UserDTO.fromRecord(pb.authStore.record!));
       _users.authRefresh();
@@ -71,14 +98,27 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<void> signUp({required UserDTO dto}) async {
     try {
+      logger.info('[AuthService] Performing signUp');
       await _users.create(body: dto.toJson()).then((response) async {
         logger.info('[AuthService] User signed up successfully $response');
         await _users.requestVerification(dto.email);
         logger.info('[AuthService] Email correctly sent to ${dto.email}');
       });
+    } on ClientException catch (error, stackTrace) {
+      logger.error(
+        '[AuthService] Error performing signUp',
+        error,
+        stackTrace,
+      );
+      throw switch (error.statusCode) {
+        400 => SignUpError(),
+        403 => UnauthorizedError(),
+        404 => NotFoundError(),
+        _ => GenericError()
+      };
     } catch (error, stackTrace) {
       logger.error(
-        '[AuthService] Error performing signOut',
+        '[AuthService] Error performing signUp',
         error,
         stackTrace,
       );
@@ -95,6 +135,13 @@ class AuthServiceImpl implements AuthService {
     try {
       final recordAuth = await _users.authWithPassword(email, password);
       pb.authStore.save(recordAuth.token, recordAuth.record);
+    } on ClientException catch (error, stackTrace) {
+      logger.error(
+        '[AuthService] Error performing signIn',
+        error,
+        stackTrace,
+      );
+      throw switch (error.statusCode) { 400 => SignInError(), _ => GenericError() };
     } catch (error, stackTrace) {
       logger.error(
         '[AuthService] Error performing signIn',
@@ -110,6 +157,10 @@ class AuthServiceImpl implements AuthService {
   Future<void> resetPassword(String email) async {
     try {
       await _users.requestPasswordReset(email);
+    } on ClientException catch (error, stackTrace) {
+      logger.error('[AuthService] Error performing resetPassword', error, stackTrace);
+
+      throw switch (error.statusCode) { 400 => InvalidRequestError(), _ => GenericError() };
     } catch (error, stackTrace) {
       logger.error('[AuthService] Error performing resetPassword', error, stackTrace);
 
@@ -118,35 +169,38 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<void> signOut() async {
-    try {
-      logger.info('[AuthService] Performing signOut');
-      pb.authStore.clear();
-      logger.info('[AuthService] SignOut successful');
-    } catch (error, stackTrace) {
-      logger.error(
-        '[AuthService] Error performing signOut',
-        error,
-        stackTrace,
-      );
-      rethrow;
-    }
+  void signOut() {
+    logger.info('[AuthService] Performing signOut');
+    pb.authStore.clear();
+    logger.info('[AuthService] SignOut successful');
   }
 
   @override
-  Future<void> reload() async {
+  Future<void> refresh() async {
     try {
-      logger.info('[AuthService] Performing reload');
+      logger.info('[AuthService] Performing refresh');
 
-      final recordAuth = await _users.authRefresh();
-      final currentUser = UserDTO.fromRecord(recordAuth.record);
-      logger.info('[AuthService] Reload successful');
-    } catch (error, stackTrace) {
+      await _users.authRefresh();
+      logger.info('[AuthService] refresh successful');
+    } on ClientException catch (error, stackTrace) {
       logger.error(
-        '[AuthService] Error performing reload',
+        '[AuthService] Error performing signIn',
         error,
         stackTrace,
       );
+      throw switch (error.statusCode) {
+        401 => UnauthorizedError(),
+        403 => UnauthorizedError(),
+        404 => RefreshTokenError(),
+        _ => GenericError()
+      };
+    } catch (error, stackTrace) {
+      logger.error(
+        '[AuthService] Error performing signIn',
+        error,
+        stackTrace,
+      );
+
       rethrow;
     }
   }
