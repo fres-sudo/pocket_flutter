@@ -22,6 +22,17 @@ class UserDTO extends DTO with _$UserDTO {
     required bool verified,
   }) = _UserDTO;
 
+  static UserDTO fake() => UserDTO(
+        id: '1',
+        name: 'John Doe',
+        email: "ciaoasdajnsd",
+        emailVisibility: true,
+        avatar: 'https://via.placeholder.com/150',
+        created: DateTime.now(),
+        updated: DateTime.now(),
+        verified: true,
+      );
+
   factory UserDTO.fromJson(Map<String, dynamic> json) => _$UserDTOFromJson(json);
 
   factory UserDTO.fromRecord(RecordModel record) => UserDTO.fromJson(record.toJson());

@@ -1,6 +1,9 @@
 part of 'dependency_injector.dart';
 
 final List<SingleChildWidget> _providers = [
+  Provider<PackageService>(
+    create: (_) => PackageService()..initialize(),
+  ),
   Provider<Talker>(
     create: (_) => Talker(),
   ),
@@ -12,6 +15,11 @@ final List<SingleChildWidget> _providers = [
             save: (String data) async =>
                 await context.read<FlutterSecureStorage>().write(key: K.authStoreKey, value: data),
             initial: LocalStorage.instance.storedValue,
+            clear: () {
+              LocalStorage.instance.clear();
+              context.read<FlutterSecureStorage>().delete(key: K.authStoreKey);
+              return Future.value(null);
+            },
           )),
   Provider<PocketBase>(
       create: (context) => PocketBase(K.pocketBaseConnectionUrl, authStore: context.read<AsyncAuthStore>())),

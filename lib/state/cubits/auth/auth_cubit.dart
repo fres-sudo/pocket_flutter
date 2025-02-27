@@ -4,9 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pocket_flutter/models/user/user.dart';
 import 'package:pocket_flutter/repositories/auth_repository.dart';
-import 'package:pocket_flutter/repositories/mappers/user_mapper.dart';
-import 'package:pocket_flutter/services/dtos/user/user_dto.dart';
-import 'package:pocketbase/pocketbase.dart';
 
 part 'auth_cubit.freezed.dart';
 

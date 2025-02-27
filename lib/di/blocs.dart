@@ -8,5 +8,10 @@ final List<BlocProvider> _blocs = [
     create: (context) => AuthCubit(
       authRepository: context.read(),
     ),
-  )
+  ),
+  BlocProvider<PackageCubit>(
+    create: (context) => PackageCubit(
+      packageService: context.read(),
+    ),
+  ),
 ];

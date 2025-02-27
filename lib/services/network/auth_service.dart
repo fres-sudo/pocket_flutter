@@ -48,22 +48,13 @@ class AuthServiceImpl implements AuthService {
     required this.googleSignInFactory,
     required this.logger,
   }) {
-    _userController = StreamController<UserDTO?>.broadcast(onListen: () => logger.info("SOME ONE IS LISTEINNG"));
-    pb.authStore.onChange.listen(
-      (event) {
-        logger.info('[AuthService] Auth store changed');
-        _updateUserState();
-      },
-      onError: (error, stackTrace) {
-        logger.error('[AuthService] Error in auth store changes', error, stackTrace);
-      },
-    );
+    _userController = StreamController<UserDTO?>();
+
     _updateUserState();
   }
 
   void _updateUserState() {
-    logger.info('[AuthService] Updating user state');
-
+    print('authStore.isValid: ${pb.authStore.isValid}');
     if (pb.authStore.isValid) {
       _userController.add(UserDTO.fromRecord(pb.authStore.record!));
       _users.authRefresh();

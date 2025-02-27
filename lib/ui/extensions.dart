@@ -1,4 +1,6 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pocket_flutter/state/cubits/theme/theme_cubit.dart';
 
 /// Adds extensions to num  to make creating durations more succint:
 ///
@@ -23,4 +25,26 @@ extension TextStyleX on TextStyle {
   TextStyle get italic => copyWith(fontStyle: FontStyle.italic);
 
   TextStyle color(Color color) => copyWith(color: color);
+}
+
+extension DarkMode on BuildContext {
+  bool get isDarkMode {
+    return read<ThemeCubit>().state == ThemeMode.dark;
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return isEmpty ? "" : "${this[0].toUpperCase()}${substring(1)}";
+  }
+}
+
+extension IterableExtensions<E> on Iterable<E> {
+  E? firstWhereOrNull(bool Function(E element) test) {
+    try {
+      return firstWhere(test);
+    } catch (_) {
+      return null;
+    }
+  }
 }

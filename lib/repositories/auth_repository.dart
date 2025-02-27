@@ -42,16 +42,11 @@ class AuthRepositoryImpl implements AuthRepository {
   final DTOMapper<UserDTO, User> userMapper;
   final Talker logger;
 
-  AuthRepositoryImpl({
+  const AuthRepositoryImpl({
     required this.authService,
     required this.userMapper,
     required this.logger,
-  }) {
-    logger.info('[AuthRepository] Created');
-    authService.user.listen((user) {
-      logger.info('[AuthRepository] User changed: $user');
-    });
-  }
+  });
 
   @override
   Stream<User?> get user => authService.user.map((user) {

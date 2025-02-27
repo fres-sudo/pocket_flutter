@@ -20,4 +20,9 @@ class LocalStorage {
   Future<void> setValue(String newValue) async {
     _storedValue = newValue;
   }
+
+  // Clear the stored value
+  Future<void> clear() async {
+    _storedValue = null;
+  }
 }

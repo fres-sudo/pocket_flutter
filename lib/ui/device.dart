@@ -112,14 +112,14 @@ class BreakPoint {
 ///Holds common sizes for icons, images, paddings, corners etc
 // Change the base [unit] if necessary to accommodate to the design
 class Sizes {
-  static const unit = 16;
-  static const xxs = 0.125 * unit;
-  static const xs = 0.25 * unit;
-  static const sm = 0.5 * unit;
-  static const md = 0.75 * unit;
-  static const lg = unit;
-  static const xl = 1.5 * unit;
-  static const xxl = 2 * unit;
+  static const double unit = 16;
+  static const double xxs = 0.125 * unit;
+  static const double xs = 0.25 * unit;
+  static const double sm = 0.5 * unit;
+  static const double md = 0.75 * unit;
+  static const double lg = unit;
+  static const double xl = 1.5 * unit;
+  static const double xxl = 2 * unit;
 
   /// Edge insets and margins for phone breakpoint size.
   static const double edgeInsetsPhone = sm;

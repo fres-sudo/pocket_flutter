@@ -15,14 +15,14 @@ class PocketFlutterTheme {
         onPrimary: Colors.white,
         scaffoldBackground: PocketFlutterColor.scaffold,
         subThemesData: const FlexSubThemesData(
-          blendOnLevel: 10,
-          blendOnColors: false,
-          useM2StyleDividerInM3: true,
-          defaultRadius: 10,
-          drawerBackgroundSchemeColor: SchemeColor.primaryContainer,
-          outlinedButtonOutlineSchemeColor: SchemeColor.primary,
-          fabSchemeColor: SchemeColor.primary,
-        ),
+            blendOnLevel: 10,
+            blendOnColors: false,
+            useM2StyleDividerInM3: true,
+            defaultRadius: 10,
+            drawerBackgroundSchemeColor: SchemeColor.primaryContainer,
+            outlinedButtonOutlineSchemeColor: SchemeColor.primary,
+            fabSchemeColor: SchemeColor.primary,
+            inputDecoratorFillColor: PocketFlutterColor.inputUnfocused),
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
         fontFamily: PocketFlutterTextStyle.fontFamily,
@@ -51,8 +51,10 @@ class PocketFlutterTheme {
         cardTheme:
             theme.cardTheme.copyWith(color: theme.colorScheme.surface, surfaceTintColor: theme.colorScheme.surface),
         inputDecorationTheme: theme.inputDecorationTheme.copyWith(
-          enabledBorder: theme.inputDecorationTheme.enabledBorder?.copyWith(
-            borderSide: const BorderSide(color: PocketFlutterColor.inputUnfocused),
+          filled: true,
+          border: const OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
       );
