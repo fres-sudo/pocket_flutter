@@ -8,4 +8,11 @@ final List<RepositoryProvider> _repositories = [
       logger: context.read(),
     ),
   ),
+  RepositoryProvider<UserRepository>(
+    create: (context) => UserRepositoryImpl(
+      userService: context.read(),
+      userMapper: context.read(),
+      logger: context.read(),
+    ),
+  ),
 ];

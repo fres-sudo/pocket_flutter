@@ -5,7 +5,7 @@ import 'package:pocket_flutter/misc/constants.dart';
 import 'package:pocket_flutter/routes/app_router.gr.dart';
 import 'package:pocket_flutter/state/cubits/auth/auth_cubit.dart';
 import 'package:pocket_flutter/ui/device.dart';
-import 'package:pocket_flutter/ui/widgets/profile_picutre.dart';
+import 'package:pocket_flutter/ui/widgets/profile_avatar.dart';
 
 @RoutePage()
 class RootPage extends StatelessWidget {
@@ -34,7 +34,7 @@ class RootPage extends StatelessWidget {
                   BottomNavigationBarItem(
                       activeIcon: const Icon(Icons.home_rounded), icon: const Icon(Icons.home_outlined), label: "Home"),
                   BottomNavigationBarItem(
-                      icon: ProfilePicutre(
+                      icon: ProfileAvatar(
                         radius: 14,
                       ),
                       label: "Profile"),

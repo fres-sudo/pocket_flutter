@@ -6,6 +6,7 @@ import 'package:pocket_flutter/misc/validators/password_validator.dart';
 import 'package:pocket_flutter/routes/app_router.gr.dart';
 import 'package:pocket_flutter/state/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pocket_flutter/ui/device.dart';
+import 'package:pocket_flutter/ui/extensions.dart';
 import 'package:pocket_flutter/ui/widgets/loading_spinner.dart';
 import 'package:pocket_flutter/ui/widgets/snack_bar.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -41,7 +42,7 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
       ),
       child: Scaffold(
           appBar: AppBar(
-            title: const Text('Login'),
+            title: Text('Login'.hardcoded()),
           ),
           body: SafeArea(
               child: Padding(
@@ -73,13 +74,14 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
                                   email: form.value[kFormEmail].toString(),
                                   password: form.value[kFormPassword].toString());
                             } else {
-                              showSnackBar(context, message: 'Please correct the errors', type: SnackBarType.error);
+                              showSnackBar(context,
+                                  message: 'Please correct the errors'.hardcoded(), type: SnackBarType.error);
                               form.markAllAsTouched();
                             }
                           },
                           child: BlocBuilder<SignInBloc, SignInState>(
                               builder: (context, state) => state.maybeWhen(
-                                  orElse: () => Center(child: const Text('Login')),
+                                  orElse: () => Center(child: Text('Login'.hardcoded())),
                                   loading: () => const LoadingSpinner())),
                         ),
                       ],

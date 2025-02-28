@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pine/pine.dart';
+import 'package:pocket_flutter/misc/constants.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 part 'user_dto.freezed.dart';
@@ -27,7 +28,6 @@ class UserDTO extends DTO with _$UserDTO {
         name: 'John Doe',
         email: "ciaoasdajnsd",
         emailVisibility: true,
-        avatar: 'https://via.placeholder.com/150',
         created: DateTime.now(),
         updated: DateTime.now(),
         verified: true,
@@ -35,5 +35,19 @@ class UserDTO extends DTO with _$UserDTO {
 
   factory UserDTO.fromJson(Map<String, dynamic> json) => _$UserDTOFromJson(json);
 
-  factory UserDTO.fromRecord(RecordModel record) => UserDTO.fromJson(record.toJson());
+  factory UserDTO.fromRecord(RecordModel record) {
+    final json = record.toJson();
+    final avatarUrl =
+        json['avatar'] != null ? "${K.pocketBaseConnectionUrl}/api/files/users/${record.id}/${json['avatar']}" : null;
+    return UserDTO(
+      id: record.id,
+      name: json['name'],
+      email: json['email'],
+      emailVisibility: json['emailVisibility'],
+      avatar: avatarUrl,
+      created: DateTime.parse(json['created']),
+      updated: DateTime.parse(json['updated']),
+      verified: json['verified'],
+    );
+  }
 }

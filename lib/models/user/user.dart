@@ -20,7 +20,6 @@ class User with _$User {
         name: 'John Doe',
         email: 'john@doe.com',
         emailVisibility: true,
-        avatar: null,
         created: DateTime.now(),
         updated: DateTime.now(),
         verified: true,

@@ -1,12 +1,9 @@
-import 'dart:io';
-
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pocket_flutter/errors/generic_errors.dart';
 import 'package:pocket_flutter/errors/localized.dart';
-import 'dart:async';
-
 import 'package:pocket_flutter/models/user/user.dart';
 import 'package:pocket_flutter/repositories/user_repository.dart';
 

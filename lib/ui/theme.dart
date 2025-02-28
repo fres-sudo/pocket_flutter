@@ -57,12 +57,13 @@ class PocketFlutterTheme {
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
+        bottomNavigationBarTheme: theme.bottomNavigationBarTheme.copyWith(elevation: 0),
       );
 }
 
 const FlexSchemeData _appFlexScheme = FlexSchemeData(
   name: "PocketFlutter",
-  description: 'PocketFlutter custom  theme',
+  description: 'PocketFlutter custom theme',
   light: FlexSchemeColor(
     primary: PocketFlutterColor.primary,
     primaryContainer: PocketFlutterColor.container,

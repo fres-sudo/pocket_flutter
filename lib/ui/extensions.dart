@@ -48,3 +48,7 @@ extension IterableExtensions<E> on Iterable<E> {
     }
   }
 }
+
+extension TODELETE on String {
+  String hardcoded() => this;
+}

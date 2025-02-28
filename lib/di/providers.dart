@@ -32,4 +32,10 @@ final List<SingleChildWidget> _providers = [
       pb: context.read(),
     ),
   ),
+  Provider<UserService>(
+    create: (context) => UserServiceImpl(
+      logger: context.read(),
+      pb: context.read(),
+    ),
+  ),
 ];

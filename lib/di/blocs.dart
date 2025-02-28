@@ -14,4 +14,9 @@ final List<BlocProvider> _blocs = [
       packageService: context.read(),
     ),
   ),
+  BlocProvider<UserBloc>(
+    create: (context) => UserBloc(
+      userRepository: context.read(),
+    ),
+  ),
 ];

@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_flutter/state/cubits/auth/auth_cubit.dart';
-import 'package:pocket_flutter/ui/widgets/error_image_widget.dart';
 import 'package:pocket_flutter/ui/widgets/loading_spinner.dart';
 
-class ProfilePicutre extends StatelessWidget {
-  const ProfilePicutre({super.key, this.isEditable = false, this.radius = 50});
+class ProfileAvatar extends StatelessWidget {
+  const ProfileAvatar({super.key, this.isEditable = false, this.radius = 50});
 
   final bool isEditable;
   final double radius;
@@ -24,13 +23,18 @@ class ProfilePicutre extends StatelessWidget {
                 size: radius,
               ));
         } else {
-          return CircleAvatar(
-            radius: radius,
-            child: CachedNetworkImage(
-                imageUrl: avatar,
-                placeholder: (_, __) => const LoadingSpinner(),
-                fit: BoxFit.cover,
-                errorWidget: (_, __, ___) => const ErrorImageWidget()),
+          return CachedNetworkImage(
+            imageUrl: avatar,
+            imageBuilder: (context, imageProvider) => Container(
+              width: radius * 2,
+              height: radius * 2,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+              ),
+            ),
+            placeholder: (context, url) => const LoadingSpinner(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           );
         }
       });
